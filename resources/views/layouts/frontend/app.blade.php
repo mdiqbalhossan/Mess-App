@@ -56,6 +56,28 @@
 
 
     @include('layouts.frontend.partials.footer')
+        <div class="fab-button animate bottom-right dropdown" style="bottom: 75px;">
+            <a href="#" class="fab" data-toggle="modal" data-target="#DialogImage" style="background: #071327">
+                <ion-icon name="videocam-outline"></ion-icon>
+            </a>
+        </div>
+
+        <!-- Dialog Image -->
+        <div class="modal fade dialogbox" id="DialogImage" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <iframe width="100%" height="100%"
+                            src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                    </iframe>
+                    <div class="modal-footer">
+                        <div class="btn-inline">
+                            <a href="#" class="btn" data-dismiss="modal">CLOSE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- * Dialog Image -->
     </div>
     <!-- * App Capsule -->
 

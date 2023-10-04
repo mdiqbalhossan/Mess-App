@@ -37,10 +37,11 @@
             </div>
             <div class="section mt-1">
                 <h1>Get started</h1>
-                <h4>নিচের দেওয়া User ID ফিল্ডে ম্যানেজার থেকে পাওয়া প্রদত্ত আইডি টি দিন এবং লগইন বাটন এ ক্লিক করুন। 
-                    আইডি টি সঠিক হলে আপনাকে হোম পেজ এ নিয়ে যাবে। ভূল User Id দিলে এরর শো করবে। 
-                    লগইন করার পর আপনি চাইলে প্রোফাইল থেকে ইউজার আইডি Change করতে পারবেন। 
-                    ইউজার আইডি ভূলে গেলে ম্যানেজার এর সাথে যোগাযোগ করার জন্য অনুরোধ করা হলো।  
+                <h4>নিচের দেওয়া User ID ফিল্ডে ম্যানেজার থেকে পাওয়া প্রদত্ত আইডি টি দিন এবং লগইন বাটন এ ক্লিক করুন।
+                    আইডি টি সঠিক হলে আপনাকে হোম পেজ এ নিয়ে যাবে। ভূল User Id দিলে এরর শো করবে।
+                    লগইন করার পর আপনি চাইলে প্রোফাইল থেকে ইউজার আইডি Change করতে পারবেন।
+                    ইউজার আইডি ভূলে গেলে ম্যানেজার এর সাথে যোগাযোগ করার জন্য অনুরোধ করা হলো।
+                    সিস্টেম এর সব ফাংশনালিটি বুজার জন্য ভিডিও আইকন এ ক্লিক করে ভিডিও টা ভালো ভাবে দেখার অনুরোধ রইলো।
                 </h4>
             </div>
             <div class="section mt-1 mb-5">
@@ -64,7 +65,7 @@
                         </div>
                     </div>
 
-                    <div class="form-links mt-2" id="forgot_password_field" style="display: none;">                        
+                    <div class="form-links mt-2" id="forgot_password_field" style="display: none;">
                         <div><a href="page-forgot-password.html" class="text-muted">Forgot Password?</a></div>
                     </div>
 
@@ -76,6 +77,29 @@
             </div>
         </div>
 
+        <div class="fab-button animate bottom-right dropdown" style="bottom: 75px;">
+            <a href="#" class="fab" data-toggle="modal" data-target="#DialogImage" style="background: #071327">
+                <ion-icon name="videocam-outline"></ion-icon>
+            </a>
+        </div>
+
+        <!-- Dialog Image -->
+        <div class="modal fade dialogbox" id="DialogImage" data-backdrop="static" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <iframe width="100%" height="100%"
+                            src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                    </iframe>
+                    <div class="modal-footer">
+                        <div class="btn-inline">
+                            <a href="#" class="btn" data-dismiss="modal">CLOSE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- * Dialog Image -->
+
         {{-- Toast --}}
         <div id="toast-12" class="toast-box bg-danger toast-center">
             <div class="in">
@@ -85,7 +109,7 @@
                 </div>
             </div>
             <button type="button" class="btn btn-sm btn-text-light close-button">CLOSE</button>
-        </div>           
+        </div>
         <!-- * toast danger -->
 
         <!-- toast success -->
@@ -97,12 +121,12 @@
                 </div>
             </div>
             <button type="button" class="btn btn-sm btn-text-light close-button">CLOSE</button>
-        </div>        
+        </div>
         <!-- * toast success -->
 
     </div>
     <!-- * App Capsule -->
-    
+
 
 
     <!-- Jquery -->
@@ -126,7 +150,7 @@
             }
         });
 
-        $("#loginBtn").click(function (e) { 
+        $("#loginBtn").click(function (e) {
             e.preventDefault();
             $(this).html("Waiting...");
             $.ajax({
