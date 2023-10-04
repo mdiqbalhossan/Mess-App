@@ -11,8 +11,23 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\HomeController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/clear-cache', function (){
+    // Clear the application cache
+    Artisan::call('cache:clear');
+
+    // Clear the route cache
+    Artisan::call('route:clear');
+
+    // Clear the configuration cache
+    Artisan::call('config:clear');
+
+    // Clear the view cache
+    Artisan::call('view:clear');
+});
 
 
 // use Revolution\Google\Sheets\Sheets as SheetsSheets;
