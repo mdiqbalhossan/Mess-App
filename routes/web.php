@@ -42,7 +42,7 @@ Route::controller(HomeController::class)->group(function(){
 Route::controller(UserDashboardController::class)->prefix('user')->group(function(){
     Route::get('/dashboard', 'index')->name('user.dashboard');
     Route::get('/meal-info','mealInfo')->name('meal.info');
-});
+})->middleware('auth:member');
 
 
 Route::get('/test', function() {
