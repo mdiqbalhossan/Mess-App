@@ -10,7 +10,7 @@
     </button>
 </div>
 <div class="row">
-    <div class="col-lg-3 col-md-4 order-1">
+    <div class="col-lg-3 col-md-4 order-1 my-2">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 order-1">
+    <div class="col-lg-3 col-md-4 order-1 my-2">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 order-1">
+    <div class="col-lg-3 col-md-4 order-1 my-2">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 order-1">
+    <div class="col-lg-3 col-md-4 order-1 my-2">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -73,7 +73,7 @@
 </div>
 <hr class="my-2" />
 <div class="row">
-    <div class="col-lg-3 col-md-4 order-1">
+    <div class="col-lg-3 col-md-4 order-1 my-2">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -87,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 order-1">
+    <div class="col-lg-3 col-md-4 order-1 my-2">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -101,7 +101,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 order-1">
+    <div class="col-lg-3 col-md-4 order-1 my-2">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -115,7 +115,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 order-1">
+    <div class="col-lg-3 col-md-4 order-1 my-2">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
@@ -133,7 +133,7 @@
 <hr class="my-2" />
 {{-- Table --}}
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 my-2">
         <div class="card">
             <h5 class="card-header">Top 5 Minus</h5>
             <div class="card-body">
@@ -161,7 +161,7 @@
         </div>
         <!--/ Bordered Table -->
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 my-2">
         <div class="card">
             <h5 class="card-header">Most 5 Deposit</h5>
             <div class="card-body">
@@ -209,30 +209,30 @@
 <script src="{{ asset('backend') }}/assets/js/ui-toasts.js"></script>
 <script>
     $(function () {
-        $("#sync_button").click(function (e) { 
+        $("#sync_button").click(function (e) {
             e.preventDefault();
             $(this).html("Loading...");
             toastr.options =
             {
                 "closeButton" : true,
                 "progressBar" : true,
-                
+
             }
             $.ajax({
                 type: "GET",
-                url: "{{ route('member.import') }}",                
+                url: "{{ route('member.import') }}",
                 dataType: "json",
                 success: function (response) {
                     console.log(response);
                     if(response.status == "success"){
-                        $("#sync_button").html("Sync");                        
+                        $("#sync_button").html("Sync");
                         toastr.success(response.message);
                     }else{
                         toastr.success('Error, Something went wrong!');
-                    }                    
+                    }
                 }
             });
-            
+
         });
     });
 </script>
