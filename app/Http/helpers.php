@@ -72,7 +72,9 @@ function getSingleBalance($index){
 /** After Total Meal  */
 
 function balanceMeal($index){
-    $meal = intval(getSingleBalance($index) / getMealRate());
+    $numberWithoutCommas = str_replace(',', '', getSingleBalance($index));
+    $integerValue = (int)$numberWithoutCommas;
+    $meal = intval( $integerValue / getMealRate());
     return $meal;
 }
 
