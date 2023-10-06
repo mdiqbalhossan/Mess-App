@@ -99,11 +99,7 @@ class MemberController extends Controller
         foreach ($data as $key => $value) {
             $member = Member::where('room_no', $value['room_no'])->where('name', $value['name'])->first();
             if($member){
-                if($member->u_id !== null){
-                    $u_id = $member->u_id;
-                }else{
-                    $u_id = $member->room_no.rand(10,99);
-                }
+
                 $member->update([
                     'balance' => $value['balance'],
                     'month' => date("F"),
