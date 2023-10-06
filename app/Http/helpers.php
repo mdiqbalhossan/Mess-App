@@ -64,6 +64,18 @@ function getSingleTotalDeposit($index){
 function getSingleTotalMeal($index){
     return getData()[$index][51];
 }
+/** Get Single Balance */
+function getSingleBalance($index){
+    return getData()[$index][18];
+}
+
+/** After Total Meal  */
+
+function balanceMeal($index){
+    $meal = intval(getSingleBalance($index) / getMealRate());
+    return $meal;
+}
+
 /**Single Meal */
 function getSingleMeal($index){
     $sheets = getData();

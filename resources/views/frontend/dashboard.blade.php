@@ -71,7 +71,9 @@
 
 {{-- Meal Information Section --}}
 <div class="section full mt-3 mb-3">
-
+    <div class="alert alert-outline-primary mb-1" role="alert">
+        আপনার ব্যালেন্স অনুযায়ী আপনি আর {{ balanceMeal(Auth::guard('member')->user()->index) }} মিল খাইতে পারবেন। এর পর থেকে মিল অফ হয়ে যাবে।
+    </div>
     <div class="card bg-light mb-2">
         <div class="card-header">
             <div class="d-flex justify-content-between">
@@ -159,7 +161,7 @@
                         </div>
                         <div class="in">
                             <div>Balance</div>
-                            <span class="badge {{ Auth::guard('member')->user()->balance > 0 ? 'badge-success' : 'badge-danger' }}">{{ Auth::guard('member')->user()->balance }}</span>
+                            <span class="badge {{ getSingleBalance(Auth::guard('member')->user()->index) > 0 ? 'badge-success' : 'badge-danger' }}">{{ getSingleBalance(Auth::guard('member')->user()->index) }}</span>
                         </div>
                     </div>
                 </li>
