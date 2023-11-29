@@ -2,6 +2,7 @@
 
 use App\Models\Meal;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
 use Revolution\Google\Sheets\Facades\Sheets;
 use Twilio\Rest\Client;
@@ -104,6 +105,7 @@ function getImportData(){
         $data[$i]['name'] = $sheets[$i][2];
         $data[$i]['balance'] = $sheets[$i][18];
         $data[$i]['deposit'] = $sheets[$i][9];
+        $data[$i]['index_value'] = $i;
     }
     return $data;
 }

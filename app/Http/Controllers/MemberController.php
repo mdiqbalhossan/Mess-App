@@ -99,7 +99,6 @@ class MemberController extends Controller
         foreach ($data as $key => $value) {
             $member = Member::where('room_no', $value['room_no'])->where('name', $value['name'])->first();
             if($member){
-
                 $member->update([
                     'balance' => $value['balance'],
                     'month' => date("F"),

@@ -18,11 +18,11 @@ class Member extends Authenticatable
         parent::boot();
 
         static::creating(function ($member) {
-            $member->generateUniqueID();
+            $this->generateUniqueID();
         });
 
         static::updating(function ($member) {
-            $member->generateUniqueID();
+            $this->generateUniqueID();
         });
     }
 
@@ -30,7 +30,7 @@ class Member extends Authenticatable
     {
         // Generate a 2-digit random number
         $randomNumber = str_pad(random_int(0, 99), 2, '0', STR_PAD_LEFT);
-        if($this->u_id !== null){
+        if($this->u_id != null){
             $u_id = $this->u_id;
         }else{
             $u_id = $this->room_no.$randomNumber;

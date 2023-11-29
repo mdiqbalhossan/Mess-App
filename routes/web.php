@@ -51,7 +51,7 @@ Route::middleware('auth:member')->group(function (){
 
 Route::get('/test', function() {
     echo "<pre>";
-    print_r(getSingleMeal(28));
+    print_r(getImportData());
 
 });
 
