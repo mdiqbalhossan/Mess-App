@@ -32,7 +32,7 @@ Route::get('/clear-cache', function (){
 
 // use Revolution\Google\Sheets\Sheets as SheetsSheets;
 
-// Route::redirect('/', '/dashboard');
+Route::redirect('/', '/login');
 Route::controller(HomeController::class)->group(function(){
     Route::get('/','index')->name('home');
     Route::post('/user-id', 'checkUserId')->name('check.userid');
@@ -51,7 +51,7 @@ Route::middleware('auth:member')->group(function (){
 
 Route::get('/test', function() {
     echo "<pre>";
-    print_r(getImportData());
+    print_r(getSingleMeal(28));
 
 });
 

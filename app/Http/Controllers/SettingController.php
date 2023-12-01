@@ -26,6 +26,9 @@ class SettingController extends Controller
         if($request->has('manager_room')){
             setSetting('manager_room', $request->manager_room);
         }
+        if ($request->has('number')) {
+            setSetting('number', $request->number);
+        }
 
         return redirect()->back()->with('message', 'Setting Updated Successfully!');
     }

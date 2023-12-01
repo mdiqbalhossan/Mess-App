@@ -20,54 +20,101 @@ function getCash(){
 }
 
 function getMealRate(){
-    return getData()[1][2];
+    return getData()[1][2] ?? 0;
 }
 
+
 function getTotalBazar(){
-    return getData()[4][51];
+    return getData()[4][51] ?? 0;
 }
 
 function getTotalMember(){
-    return getData()[70][2];
+    return getData()[70][2] ?? 0;
 }
 
 function getTotalMeal(){
-    return getData()[70][51];
+    return getData()[70][51] ?? 0;
 }
 
 function getTotalCost(){
-    return getData()[70][17];
+    return getData()[70][17] ?? 0;
 }
 
 function getTotalDeposit(){
-    return getData()[70][9];
+    return getData()[70][9] ?? 0;
 }
 
 function getTotalNegative(){
-    return getCash()[3][3];
+    return getCash()[3][3] ?? 0;
 }
 
 function getTotalCash(){
-    return getCash()[9][1];
+    return getCash()[9][1] ?? 0;
 }
 
 /**Single Total Cost */
 function getSingleTotalCost($index){
-    return getData()[$index][17];
+    return getData()[$index][17] ?? 0;
+}
+
+/**Single User Previous Meal */
+function previousBalance($index){
+    return getData()[$index][4] ?? 0;
+}
+
+/** Single User Adjust Balance */
+function adjustBalance($index)
+{
+    return getData()[$index][10] ?? 0;
+}
+
+/**Single Meal Cost */
+function singleMealCost($index){
+    return getData()[$index][11] ?? 0;
+}
+
+/**Single Cooker Cost */
+function singleCookerCost($index){
+    return getData()[$index][12] ?? 0;
+}
+
+/**Single Dust Cost */
+function singleDustCost($index)
+{
+    return getData()[$index][14] ?? 0;
+}
+
+/**Single Utility Cost */
+function singleUtilityCost($index)
+{
+    return getData()[$index][15] ?? 0;
+}
+
+/**Single Other Cost */
+function singleOtherCost($index)
+{
+    return getData()[$index][16] ?? 0;
 }
 
 /**Single Total Deposit */
 function getSingleTotalDeposit($index){
-    return getData()[$index][9];
+    return getData()[$index][9] ?? 0;
 }
 
 /**Single Total Meal */
 function getSingleTotalMeal($index){
-    return getData()[$index][51];
+    return getData()[$index][51] ?? 0;
 }
 /** Get Single Balance */
 function getSingleBalance($index){
-    return getData()[$index][18];
+    return getData()[$index][18] ?? 0;
+}
+
+/** Number Format */
+function amount($amount){
+    $amoutWithoutcommas = str_replace(',', '', $amount);
+    $floatValue = (float)$amoutWithoutcommas;
+    return number_format($floatValue, 2);
 }
 
 /** After Total Meal  */
@@ -211,5 +258,18 @@ function notice()
     $notices = \App\Models\Notice::where('status', 1)->latest()->get();
 
     return $notices;
+}
+
+function getNameToIndex($name){
+    $index = null;
+    $data = getImportData();
+    foreach ($data as $key => $value) {
+        if($value['name'] == $name){
+            $index = $key;
+            break;
+        }
+    }
+
+    return $index;
 }
 ?>

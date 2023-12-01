@@ -57,6 +57,16 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="number">Manager Phone</label>
+                                <input type="text" name="number" class="form-control @error('number') is-invalid @enderror"
+                                    id="number" value="{{ getSetting('number') }}" />
+                                @error('number')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>                   
                     
                     <button type="submit" class="btn btn-primary">Save</button>
