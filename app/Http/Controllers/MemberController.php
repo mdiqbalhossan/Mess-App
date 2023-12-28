@@ -13,11 +13,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $month = ucfirst(getSetting('month_name'));
-        $users = Member::orderBy('room_no', 'desc')
-                ->where('month', $month)
-                ->where('year', date('Y'))
-                ->get();
+        $users = Member::all();
         return view('backend.member.index', compact('users'));
     }
 
@@ -68,16 +64,10 @@ class MemberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Member $member)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'room_no' => 'required',
-            'name' => 'required',
-        ]);
-
+        $member = Member::find($id);
         $member->update([
-            'room_no' => $request->room_no,
-            'name' => $request->name,
             'contact_number' => $request->contact_number,
             'wa_number' => $request->wa_number,
         ]);
@@ -97,48 +87,23 @@ class MemberController extends Controller
     public function import(){
         $data = getImportData();
         foreach ($data as $key => $value) {
-            $member = Member::where('room_no', $value['room_no'])->where('name', $value['name'])->first();
+            $member = Member::where('index', $key)->where('room_no', $value['room_no'])->first();
             if($member){
                 $member->update([
                     'balance' => $value['balance'],
-                    'month' => date("F"),
-                    'year' => date("Y"),
                     'index' => $key,
                 ]);
             }else{
-                $u_id = $value['room_no'].rand(10,99);
                 $member = Member::create([
                     'room_no' => $value['room_no'],
                     'name' => $value['name'],
                     'balance' => $value['balance'],
-                    'month' => date("F"),
-                    'year' => date("Y"),
                     'index' => $key,
-                ]);
-            }
-
-            $deposit = Deposit::where('member_id', $member->id)->first();
-            if($deposit){
-                $deposit->update([
-                    'amount' => $value['deposit'],
-                    'month' => date("F"),
-                    'year' => date("Y"),
-                ]);
-            }else{
-                $deposit = Deposit::create([
-                    'member_id' => $member->id,
-                    'amount' => $value['deposit'],
-                    'month' => date("F"),
-                    'year' => date("Y"),
                 ]);
             }
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data Sync Successfully. Latest Data Reflected in your system.'
-        ]);
 
-        // return redirect()->back()->with('message', 'Data Import Successfully');
+         return redirect()->back()->with('message', 'Data Import Successfully');
     }
 }
