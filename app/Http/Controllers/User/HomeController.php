@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index(){
-        return view('welcome');
+        return redirect()->route('login');
+//        return view('welcome');
     }
 
     public function checkUserId(Request $request)

@@ -46,8 +46,6 @@ Route::middleware('auth:member')->group(function (){
     });
 });
 
-Route::redirect('/', '/login');
-
 
 
 
