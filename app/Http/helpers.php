@@ -133,7 +133,7 @@ function getSingleMeal($index){
     for($i=6; $i<=count($sheets) - 5; $i++){
         $k = 1;
         for($j = 20; $j<51; $j++){
-            $meal[$k] = $sheets[28][$j];
+            $meal[$k] = $sheets[$index][$j];
             $k++;
         }
         return $meal;
