@@ -46,6 +46,12 @@
                 <div data-i18n="Analytics">Minus List</div>
             </a>
         </li>
+        <li class="menu-item {{ request()->is('warninglist') ? 'active' : '' }}">
+            <a href="{{ route('warninglist') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-alarm-exclamation"></i>
+                <div data-i18n="Analytics">Warning List</div>
+            </a>
+        </li>
         @if(auth()->user()->is_admin == 1)
         <li class="menu-item {{ request()->is('manager') ? 'active' : '' }}">
             <a href="{{ route('manager.index') }}" class="menu-link">

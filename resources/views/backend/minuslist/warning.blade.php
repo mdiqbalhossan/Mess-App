@@ -1,17 +1,17 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Minus List')
+@section('title', 'Warning List')
 
 @push('css')
 <link rel="stylesheet" href="//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 @endpush
 
 @section('content')
-<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Minus /</span> Minus List</h4>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Warning /</span> Warning List</h4>
 
 <!-- Basic Bootstrap Table -->
 <div class="card">
-    <h5 class="card-header">Minus List
+    <h5 class="card-header">Warning List
     </h5>
     <div class="table-responsive text-nowrap p-2">
         <table class="table" id="myTable">
@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-                @foreach ($balancesMinus as $key => $user)
+                @foreach ($balancesWarning as $key => $user)
                 <tr>
                     <td>
                         {{ $user->room_no }}
@@ -79,7 +79,7 @@
                         <label for="template" class="form-label">Select Template</label>
                         <select class="form-select" id="template" name="template" aria-label="Default select example" required>
                             <option selected disabled>-- Select Template --</option>
-                                <option value="minus">Minus</option>
+                            <option value="warning">Warning</option>
                         </select>
                     </div>
                     <div class="d-none" id="template_text">

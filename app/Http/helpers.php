@@ -114,7 +114,7 @@ function getSingleBalance($index){
 function amount($amount){
     $amoutWithoutcommas = str_replace(',', '', $amount);
     $floatValue = (float)$amoutWithoutcommas;
-    return number_format($floatValue, 2);
+    return $floatValue;
 }
 
 /** After Total Meal  */
@@ -122,7 +122,7 @@ function amount($amount){
 function balanceMeal($index){
     $numberWithoutCommas = str_replace(',', '', getSingleBalance($index));
     $integerValue = (int)$numberWithoutCommas;
-    $meal = intval( $integerValue / getMealRate());
+    $meal = (int)($integerValue / getMealRate());
     return $meal;
 }
 
@@ -271,5 +271,43 @@ function getNameToIndex($name){
     }
 
     return $index;
+}
+
+function replaceTemplate($template, $id = null){
+    if($id != null){
+        $member = \App\Models\Member::find($id);
+        $balance = amount($member->balance);
+        $templates = config('sms.template');
+        $temData = $templates[$template];
+        $temData = str_replace('{taka}', $balance, $temData);
+
+        return $temData;
+    }
+
+    return null;
+}
+
+function sms_send($num, $msg) {
+    $url = "http://bulksmsbd.net/api/smsapi";
+    $api_key = "c9nCew142yHM6rlp59Zf";
+    $senderid = "8809617614290";
+    $number = $num;
+    $message = $msg;
+
+    $data = [
+        "api_key" => $api_key,
+        "senderid" => $senderid,
+        "number" => $number,
+        "message" => $message
+    ];
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    return $response;
 }
 ?>

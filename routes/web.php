@@ -32,7 +32,7 @@ Route::get('/clear-cache', function (){
 
 // use Revolution\Google\Sheets\Sheets as SheetsSheets;
 
-Route::redirect('/', '/login');
+
 Route::controller(HomeController::class)->group(function(){
     Route::get('/','index')->name('home');
     Route::post('/user-id', 'checkUserId')->name('check.userid');
@@ -45,6 +45,8 @@ Route::middleware('auth:member')->group(function (){
         Route::get('/meal-info','mealInfo')->name('meal.info');
     });
 });
+
+Route::redirect('/', '/login');
 
 
 
@@ -78,11 +80,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // MinusListController
     Route::controller(MinusListController::class)->group(function(){
         Route::get('/minuslist', 'index')->name('minuslist');
+        Route::get('/warninglist', 'warning')->name('warninglist');
     });
 
     // Message Send Controller
     Route::controller(MessageSendController::class)->group(function(){
         Route::get('/messagesend/{id}', 'index')->name('messagesend');
+        Route::post('/send', 'send')->name('sendMessage');
     });
 
     // Setting Controller
