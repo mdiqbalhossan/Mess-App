@@ -51,7 +51,7 @@ Route::middleware('auth:member')->group(function (){
 
 Route::get('/test', function() {
     echo "<pre>";
-    print_r(getSingleMeal(28));
+    print_r(sms_balance_check());
 
 });
 
@@ -109,8 +109,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/manager/{id}/delete', 'delete')->name('manager.delete');
     });
 
-//   Notice Contrroller
+    //Notice Contrroller
     Route::resource('notice', \App\Http\Controllers\NoticeController::class);
+
+    //Utility Controller
+    Route::controller(\App\Http\Controllers\UtilityController::class)->group(function(){
+        Route::get('/utility', 'index')->name('utility.index');
+        Route::post('/utility', 'generateBill')->name('utility.generate');
+        Route::get('pay-bill/{id}', 'payBill')->name('utility.changeStatus');
+    });
 
 
 });

@@ -61,6 +61,14 @@
         </li>
         @endif
         @if(auth()->user()->is_admin == 1)
+        <li class="menu-item {{ request()->is('utility') ? 'active' : '' }}">
+            <a href="{{ route('utility.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-bulb"></i>
+                <div data-i18n="Utility">Utility</div>
+            </a>
+        </li>
+        @endif
+        @if(auth()->user()->is_admin == 1)
             <li class="menu-item {{ request()->is('notice') ? 'active' : '' }}">
                 <a href="{{ route('notice.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-bell-plus"></i>
