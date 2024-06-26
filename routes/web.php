@@ -116,7 +116,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::controller(\App\Http\Controllers\UtilityController::class)->group(function(){
         Route::get('/utility', 'index')->name('utility.index');
         Route::post('/utility', 'generateBill')->name('utility.generate');
-        Route::get('pay-bill/{id}', 'payBill')->name('utility.changeStatus');
+        Route::get('pay-bill/{id}', 'payBill')->name('utility.payBill');
     });
 
 

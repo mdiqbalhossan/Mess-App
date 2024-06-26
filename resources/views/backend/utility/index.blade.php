@@ -69,7 +69,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="" class="btn btn-dark btn-sm" title="Received Amount">
+                                <a href="{{ route('utility.payBill') }}" class="btn btn-dark btn-sm" title="Received Amount">
                                     <i class='bx bx-checkbox-checked'></i>
                                 </a>
                             </td>
