@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\Utility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UtilityController extends Controller
 {
@@ -49,6 +50,7 @@ class UtilityController extends Controller
             $tempData = "আপনার ইউটিলিটি বিল পরিশোধ হয়েছে। মাস: " . $bill->month . ", পরিশোধের পরিমান: " . $bill->amount . " টাকা। - আমানুল্লাহ হাউজ";
             $smsSend = sms_send($contact_number, $tempData);
             $smsSend = json_decode($smsSend, true);
+            Log::info($smsSend);
             if ($smsSend['response_code'] == 202) {
                 $type = 'message';
                 $msg = 'SMS Send Successfully!';

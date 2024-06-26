@@ -69,9 +69,11 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('utility.payBill', $utility->id) }}" class="btn btn-dark btn-sm" title="Received Amount">
-                                    <i class='bx bx-checkbox-checked'></i>
-                                </a>
+                                @if ($utility->status == 'unpaid')                                    
+                                    <a href="{{ route('utility.payBill', $utility->id) }}" class="btn btn-dark btn-sm" title="Received Amount">
+                                        <i class='bx bx-checkbox-checked'></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
