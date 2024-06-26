@@ -65,9 +65,9 @@
                             data-id="{{ $user->id }}"
                             title="Send Message"
                         ><i class="bx bx-mail-send me-1"></i></button>
-                        <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure want to delete?')){document.getElementById('dForm').submit()}"><i
+                        <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure want to delete?')){document.getElementById('dForm_{{ $user->id }}').submit()}"><i
                                 class="bx bx-trash me-1"></i></a>
-                        <form action="{{ route('member.destroy', $user->id) }}" method="post" id="dForm">
+                        <form action="{{ route('member.destroy', $user->id) }}" method="post" id="dForm_{{ $user->id }}">
                             @csrf
                             @method('DELETE')
                         </form>
