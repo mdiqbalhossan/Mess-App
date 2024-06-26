@@ -106,4 +106,17 @@ class MemberController extends Controller
 
          return redirect()->back()->with('message', 'Data Import Successfully');
     }
+
+    public function checkForUtility(Request $request)
+    {
+        $ids = $request->ids;
+        $members = Member::whereIn('id', $ids)->get();
+        foreach($members as $member){
+            $member->update([
+                'is_utility' => 1,
+            ]);
+        }
+
+        return response()->json(['message' => 'Data Update Successfully']);
+    }
 }

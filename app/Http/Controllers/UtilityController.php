@@ -29,7 +29,7 @@ class UtilityController extends Controller
         $month = generateMonthAndYear($request->month);
         $amount = $request->amount;
 
-        $members = Member::all();
+        $members = Member::where('is_utility', 1)->get();
         foreach ($members as $member) {
             $exists = Utility::where('member_id', $member->id)->where('month', $month)->first();
             if (!$exists) {
