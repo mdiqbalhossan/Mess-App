@@ -303,7 +303,8 @@ function sms_balance_check()
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     $response = curl_exec($ch);
     curl_close($ch);
-    return $response;
+    $data = json_decode($response, true);
+    return $data['balance'];
 }
 
 function sms_send($num, $msg) {
