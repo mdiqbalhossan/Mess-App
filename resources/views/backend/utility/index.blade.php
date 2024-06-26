@@ -41,6 +41,9 @@
     <!-- Basic Bootstrap Table -->
     <div class="card">
         <h5 class="card-header">Utility Bill ({{ $monthNameAndYear }})
+            <span class="badge bg-dark">Total Bill: ৳{{ $totalBill }}</span>
+            <span class="badge bg-dark">Collect Bill: ৳{{ $paidBill }}</span>
+            <span class="badge bg-dark">Unpaid Bill: ৳{{ $unpaidBill }}</span>
         </h5>
         <div class="table-responsive text-nowrap p-2">
             <table class="table" id="myTable">
@@ -57,8 +60,8 @@
                 <tbody class="table-border-bottom-0">
                     @foreach ($utilities as $utility)
                         <tr>
-                            <td>{{ $utility->member->room_no }}</td>
-                            <td>{{ $utility->member->name }}</td>
+                            <td>{{ $utility->member->room_no ?? '' }}</td>
+                            <td>{{ $utility->member->name ?? '' }}</td>
                             <td>{{ $utility->month }}</td>
                             <td>{{ $utility->amount }}</td>
                             <td>

@@ -13,7 +13,10 @@ class UtilityController extends Controller
     {
         $monthNameAndYear = date('F-Y');
         $utilities = Utility::where('month', $monthNameAndYear)->get();
-        return view('backend.utility.index', compact('monthNameAndYear', 'utilities'));
+        $totalBill = Utility::where('month', $monthNameAndYear)->sum('amount');
+        $paidBill =  Utility::where('month', $monthNameAndYear)->where('status', 'paid')->sum('amount');
+        $unpaidBill = $totalBill - $paidBill;
+        return view('backend.utility.index', compact('monthNameAndYear', 'utilities', 'totalBill', 'paidBill', 'unpaidBill'));
     }
 
     public function generateBill(Request $request)
