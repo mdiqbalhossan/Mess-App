@@ -45,6 +45,7 @@ class UtilityController extends Controller
         $bill = Utility::find($id);
         $bill->status = 'paid';
         if ($bill->save()) {
+            $contact_number = Member::find($bill->member_id)->contact_number;
             $tempData = "আপনার ইউটিলিটি বিল পরিশোধ হয়েছে। মাস: " . $bill->month . ", পরিশোধের পরিমান: " . $bill->amount . " টাকা। - আমানুল্লাহ হাউজ";
             $smsSend = sms_send($contact_number, $tempData);
             $smsSend = json_decode($smsSend, true);
