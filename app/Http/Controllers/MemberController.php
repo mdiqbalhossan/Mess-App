@@ -13,7 +13,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $users = Member::all();
+        $users = Member::orderBy('room_no', 'asc')->get();
         return view('backend.member.index', compact('users'));
     }
 
