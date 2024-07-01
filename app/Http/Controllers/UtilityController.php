@@ -64,4 +64,37 @@ class UtilityController extends Controller
         }
         return redirect()->back()->with($type, $msg);
     }
+
+    public function collectAdjust(Request $request)
+    {
+        $month = $request->month;
+        $members = Member::where('is_adjust', 1)->get();
+        $totalAdjustBill = 0;
+        foreach ($members as $member) {
+            $exists = Utility::where('member_id', $member->id)->where('month', $month)->first();
+            if ($exists) {
+                $exists->status = 'paid';
+                $exists->save();
+                $totalAdjustBill += $exists->amount;
+            }
+        }
+
+        $default_adjust_utility_bill = getSetting('default_adjust_utility_bill');
+        $totalAdjustBill += $default_adjust_utility_bill;
+
+        $contact_number = getSetting('management_phone');
+        $tempData = 'Adjustment bill received for ' . $month . '. Total amount: ' . $totalAdjustBill . ' Taka.';
+        $smsSend = sms_send($contact_number, $tempData);
+        $smsSend = json_decode($smsSend, true);
+        Log::info($smsSend);
+        if ($smsSend['response_code'] == 202) {
+            $type = 'message';
+            $msg = 'SMS Send Successfully!';
+        } else {
+            $type = 'error';
+            $msg = 'Something Went Wrong!';
+        }
+
+        return response()->json(['message' => $msg]);
+    }
 }

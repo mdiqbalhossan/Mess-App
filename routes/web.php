@@ -119,6 +119,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/utility', 'index')->name('utility.index');
         Route::post('/utility', 'generateBill')->name('utility.generate');
         Route::get('pay-bill/{id}', 'payBill')->name('utility.payBill');
+        Route::post('collectAdjust', 'collectAdjust')->name('utility.collectAdjust');
     });
 
 

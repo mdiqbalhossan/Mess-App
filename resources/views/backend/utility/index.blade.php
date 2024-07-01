@@ -40,10 +40,12 @@
 
     <!-- Basic Bootstrap Table -->
     <div class="card">
+        <input type="hidden" name="month_name" id="month_name" value="{{ $monthNameAndYear }}">
         <h5 class="card-header">Utility Bill ({{ $monthNameAndYear }})
             <span class="badge bg-dark">Total Bill: ৳{{ $totalBill }}</span>
             <span class="badge bg-dark">Collect Bill: ৳{{ $paidBill }}</span>
             <span class="badge bg-dark">Unpaid Bill: ৳{{ $unpaidBill }}</span>
+            <button class="btn btn-dark btn-sm" id="collect_adjust">Collect Adjust</button>
         </h5>
         <div class="table-responsive text-nowrap p-2">
             <table class="table" id="myTable">
@@ -124,5 +126,35 @@
                 }
             });
         }
+
+        // Collect Adjust
+        $(document).on("click", "#collect_adjust", function() {
+            $(this).text('Collecting...');
+            let month = $('#month_name').val();
+            $.ajax({
+                url: "{{ route('utility.collectAdjust') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "month": month
+                },
+                success: function(response) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true
+                    }
+                    toastr.success(response.message);
+                    $('#check_for_adjust_button').text('Collect Adjust');
+                },
+                error: function(response) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true
+                    }
+                    toastr.error(response.responseJSON.message);
+                    $('#check_for_adjust_button').text('Collect Adjust');
+                }
+            })
+        })
     </script>
 @endpush
