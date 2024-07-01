@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('member', MemberController::class);
     Route::get('members/import', [MemberController::class, 'import'])->name('member.import');
     Route::post('checkForUtility', [MemberController::class, 'checkForUtility'])->name('checkForUtility');
+    Route::post('checkForAdjust', [MemberController::class, 'checkForAdjust'])->name('checkForAdjust');
     // Deposit Controller
     Route::controller(DepositController::class)->group(function () {
         Route::get('/deposit', 'index')->name('deposit');

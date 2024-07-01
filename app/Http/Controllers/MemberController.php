@@ -119,4 +119,16 @@ class MemberController extends Controller
 
         return response()->json(['message' => 'Data Update Successfully']);
     }
+
+    public function checkForAdjust(Request $request)
+    {
+        $ids = $request->ids;
+        $members = Member::whereIn('id', $ids)->get();
+        foreach($members as $member){
+            $member->update([
+                'is_adjust' => 1,
+            ]);
+        }
+        return response()->json(['message' => 'Data Update Successfully']);
+    }
 }

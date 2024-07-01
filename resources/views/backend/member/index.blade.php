@@ -13,6 +13,7 @@
     <div class="card">
         <h5 class="card-header">Member List
             <button class="btn btn-dark btn-sm" id="check_for_utility_button">Check For Utility</button>
+            <button class="btn btn-dark btn-sm" id="check_for_adjust_button">Check For Adjust</button>
             <a href="{{ route('member.create') }}" class="btn btn-primary btn-sm float-end"><i class="fa fa-plus-circle"
                     aria-hidden="true"></i>Notify All</a>
             <a href="{{ route('member.import') }}" class="btn btn-danger btn-sm float-end mx-2"><i class="fa fa-plus-circle"
@@ -257,6 +258,47 @@
                     }
                     toastr.error(response.responseJSON.message);
                     $('#check_for_utility_button').text('Check For Utility');
+                }
+            })
+        });
+
+        $(document).on("click", "#check_for_adjust_button", function() {
+            $(this).text('Updating...');
+            var ids = [];
+            $('input[type="checkbox"]:checked').each(function() {
+                ids.push($(this).attr('id'));
+            });
+            if (ids.length == 0) {
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true
+                }
+                toastr.error('Select at least one member');
+                $('#check_for_adjust_button').text('Check For Adjust');
+                return;
+            }
+            $.ajax({
+                url: "{{ route('checkForAdjust') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "ids": ids
+                },
+                success: function(response) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true
+                    }
+                    toastr.success(response.message);
+                    $('#check_for_adjust_button').text('Check For Adjust');
+                },
+                error: function(response) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true
+                    }
+                    toastr.error(response.responseJSON.message);
+                    $('#check_for_adjust_button').text('Check For Adjust');
                 }
             })
         })
