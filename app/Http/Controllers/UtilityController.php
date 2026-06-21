@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Member;
+use App\Models\Utility;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class UtilityController extends Controller
+{
+    public function index()
+    {
+        $monthNameAndYear = date('F-Y');
+        $utilities = Utility::where('month', $monthNameAndYear)->get();
+        $totalBill = Utility::where('month', $monthNameAndYear)->sum('amount');
+        $paidBill =  Utility::where('month', $monthNameAndYear)->where('status', 'paid')->sum('amount');
+        $unpaidBill = $totalBill - $paidBill;
+        return view('backend.utility.index', compact('monthNameAndYear', 'utilities', 'totalBill', 'paidBill', 'unpaidBill'));
+    }
+
+    public function generateBill(Request $request)
+    {
+        $request->validate([
+            'month' => 'required',
+            'amount' => 'required',
+        ]);
+
+        $month = generateMonthAndYear($request->month);
+        $amount = $request->amount;
+
+        $members = Member::where('is_utility', 1)->get();
+        foreach ($members as $member) {
+            $exists = Utility::where('member_id', $member->id)->where('month', $month)->first();
+            if (!$exists) {
+                $bill = new Utility();
+                $bill->member_id = $member->id;
+                $bill->month = $month;
+                $bill->amount = $amount;
+                $bill->save();
+            }
+        }
+
+        return redirect()->back()->with('message', 'Bill generated successfully');
+    }
+
+    public function payBill($id)
+    {
+        $bill = Utility::find($id);
+        $bill->status = 'paid';
+        if ($bill->save()) {
+            $contact_number = Member::find($bill->member_id)->contact_number;
+            $tempData = "আপনার ইউটিলিটি বিল পরিশোধ হয়েছে। মাস: " . $bill->month . ", পরিশোধের পরিমান: " . $bill->amount . " টাকা। - আমানুল্লাহ হাউজ";
+            $smsSend = sms_send($contact_number, $tempData);
+            $smsSend = json_decode($smsSend, true);
+            Log::info($smsSend);
+            if ($smsSend['response_code'] == 202) {
+                $type = 'message';
+                $msg = 'SMS Send Successfully!';
+            } else {
+                $type = 'error';
+                $msg = 'Something Went Wrong!';
+            }
+        }
+        return redirect()->back()->with($type, $msg);
+    }
+
+    public function collectAdjust(Request $request)
+    {
+        $month = $request->month;
+        $members = Member::where('is_adjust', 1)->get();
+        $totalAdjustBill = 0;
+        foreach ($members as $member) {
+            $exists = Utility::where('member_id', $member->id)->where('month', $month)->first();
+            if ($exists) {
+                $exists->status = 'paid';
+                $exists->save();
+                $totalAdjustBill += $exists->amount;
+            }
+        }
+
+        $default_adjust_utility_bill = getSetting('default_adjust_utility_bill');
+        $totalAdjustBill += $default_adjust_utility_bill;
+
+        $contact_number = getSetting('management_phone');
+        $tempData = 'Adjustment bill received for ' . $month . '. Total amount: ' . $totalAdjustBill . ' Taka.';
+        $smsSend = sms_send($contact_number, $tempData);
+        $smsSend = json_decode($smsSend, true);
+        Log::info($smsSend);
+        if ($smsSend['response_code'] == 202) {
+            $type = 'message';
+            $msg = 'SMS Send Successfully!';
+        } else {
+            $type = 'error';
+            $msg = 'Something Went Wrong!';
+        }
+
+        return response()->json(['message' => $msg]);
+    }
+}

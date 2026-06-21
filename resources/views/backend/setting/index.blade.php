@@ -67,6 +67,26 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="management_phone">Management Phone</label>
+                                <input type="text" name="management_phone" class="form-control @error('management_phone') is-invalid @enderror"
+                                    id="management_phone" value="{{ getSetting('management_phone') }}" />
+                                @error('management_phone')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="default_adjust_utility_bill">Default Adjust Bill</label>
+                                <input type="text" name="default_adjust_utility_bill" class="form-control @error('default_adjust_utility_bill') is-invalid @enderror"
+                                    id="default_adjust_utility_bill" value="{{ getSetting('default_adjust_utility_bill') }}" />
+                                @error('default_adjust_utility_bill')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>                   
                     
                     <button type="submit" class="btn btn-primary">Save</button>

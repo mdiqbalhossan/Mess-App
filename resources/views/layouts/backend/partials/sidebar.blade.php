@@ -46,11 +46,25 @@
                 <div data-i18n="Analytics">Minus List</div>
             </a>
         </li>
+        <li class="menu-item {{ request()->is('warninglist') ? 'active' : '' }}">
+            <a href="{{ route('warninglist') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-alarm-exclamation"></i>
+                <div data-i18n="Analytics">Warning List</div>
+            </a>
+        </li>
         @if(auth()->user()->is_admin == 1)
         <li class="menu-item {{ request()->is('manager') ? 'active' : '' }}">
             <a href="{{ route('manager.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <div data-i18n="Analytics">Manager</div>
+            </a>
+        </li>
+        @endif
+        @if(auth()->user()->is_admin == 1)
+        <li class="menu-item {{ request()->is('utility') ? 'active' : '' }}">
+            <a href="{{ route('utility.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-bulb"></i>
+                <div data-i18n="Utility">Utility</div>
             </a>
         </li>
         @endif

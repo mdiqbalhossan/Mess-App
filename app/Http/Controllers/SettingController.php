@@ -29,6 +29,12 @@ class SettingController extends Controller
         if ($request->has('number')) {
             setSetting('number', $request->number);
         }
+        if ($request->has('management_phone')) {
+            setSetting('management_phone', $request->management_phone);
+        }
+        if ($request->has('default_adjust_utility_bill')) {
+            setSetting('default_adjust_utility_bill', $request->default_adjust_utility_bill);
+        }
 
         return redirect()->back()->with('message', 'Setting Updated Successfully!');
     }

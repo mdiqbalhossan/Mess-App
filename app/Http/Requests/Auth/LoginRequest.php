@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 
 class LoginRequest extends FormRequest
 {
@@ -28,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
     }
@@ -41,12 +40,12 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-        $credentials = $this->getCredentials();
-        if (! Auth::attempt($credentials, $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey()); 
+
+        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => __('auth.failed'),
             ]);
         }
 
@@ -74,51 +73,6 @@ class LoginRequest extends FormRequest
                 'minutes' => ceil($seconds / 60),
             ]),
         ]);
-    }
-
-    /**
-     * Get the needed authorization credentials from the request.
-     *
-     * @return array
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
-    public function getCredentials()
-    {
-        // The form field for providing username or password
-        // have name of "username", however, in order to support
-        // logging users in with both (username and email)
-        // we have to check if user has entered one or another
-        $username = $this->get('email');
-
-        if ($this->isEmail($username)) {
-            return [
-                'email' => $username,
-                'password' => $this->get('password')
-            ];
-        }
-
-        // return $this->only('email', 'password');
-        return [
-            'phone' => $username,
-            'password' =>  $this->get('password'),
-        ];
-    }
-
-    /**
-     * Validate if provided parameter is valid email.
-     *
-     * @param $param
-     * @return bool
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
-    private function isEmail($param)
-    {
-        $factory = $this->container->make(ValidationFactory::class);
-
-        return ! $factory->make(
-            ['username' => $param],
-            ['username' => 'email']
-        )->fails();
     }
 
     /**

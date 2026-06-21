@@ -32,7 +32,7 @@ Route::get('/clear-cache', function (){
 
 // use Revolution\Google\Sheets\Sheets as SheetsSheets;
 
-Route::redirect('/', '/login');
+
 Route::controller(HomeController::class)->group(function(){
     Route::get('/','index')->name('home');
     Route::post('/user-id', 'checkUserId')->name('check.userid');
@@ -51,7 +51,7 @@ Route::middleware('auth:member')->group(function (){
 
 Route::get('/test', function() {
     echo "<pre>";
-    print_r(getSingleMeal(28));
+    print_r(sms_balance_check());
 
 });
 
@@ -71,6 +71,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // Member Controller
     Route::resource('member', MemberController::class);
     Route::get('members/import', [MemberController::class, 'import'])->name('member.import');
+    Route::post('checkForUtility', [MemberController::class, 'checkForUtility'])->name('checkForUtility');
+    Route::post('checkForAdjust', [MemberController::class, 'checkForAdjust'])->name('checkForAdjust');
     // Deposit Controller
     Route::controller(DepositController::class)->group(function () {
         Route::get('/deposit', 'index')->name('deposit');
@@ -78,11 +80,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // MinusListController
     Route::controller(MinusListController::class)->group(function(){
         Route::get('/minuslist', 'index')->name('minuslist');
+        Route::get('/warninglist', 'warning')->name('warninglist');
     });
 
     // Message Send Controller
     Route::controller(MessageSendController::class)->group(function(){
         Route::get('/messagesend/{id}', 'index')->name('messagesend');
+        Route::post('/send', 'send')->name('sendMessage');
     });
 
     // Setting Controller
@@ -107,8 +111,16 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::post('/manager/{id}/delete', 'delete')->name('manager.delete');
     });
 
-//   Notice Contrroller
+    //Notice Contrroller
     Route::resource('notice', \App\Http\Controllers\NoticeController::class);
+
+    //Utility Controller
+    Route::controller(\App\Http\Controllers\UtilityController::class)->group(function(){
+        Route::get('/utility', 'index')->name('utility.index');
+        Route::post('/utility', 'generateBill')->name('utility.generate');
+        Route::get('pay-bill/{id}', 'payBill')->name('utility.payBill');
+        Route::post('collectAdjust', 'collectAdjust')->name('utility.collectAdjust');
+    });
 
 
 });
